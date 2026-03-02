@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{{ user.name }}'s Profile</h1>
+    <p>{{ user.role }}</p>
+{% endblock %}
+
+{% block content %}
+
+    {# ─── DYNAMIC STATUS BADGE ─── #}
+    {% if user.active %}
+        <span class="badge green">🟢 Active</span>
+    {% else %}
+        <span class="badge red">🔴 Inactive</span>
+    {% endif %}
+
+    {# ─── DYNAMIC SKILLS with loop helpers ─── #}
+    <h2>Skills</h2>
+    {% for skill in user.skills %}
+        <span class="tag">{{ skill }}</span>
+
+        {% if not loop.last %} · {% endif %}  {# adds dot between items, not after last #}
+    {% endfor %}
+
+    {# ─── NESTED SECTION: only show for admins ─── #}
+    {% if user.role == 'Admin' %}
+        <div class="admin-panel">
+            <h3>Admin Controls</h3>
+            <button>Manage Users</button>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+{# ─── OVERRIDE FOOTER for this page only ─── #}
+{% block footer %}
+    <footer>Profile page of {{ user.name }}</footer>
+{% endblock %}

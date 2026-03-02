@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {# ─── DYNAMIC STATS CARDS from list of dicts ─── #}
+    <div class="cards">
+        {% for stat in stats %}
+            <div class="card card-{{ stat.color }}">
+                <h3>{{ stat.label }}</h3>
+                <p>{{ stat.value }}</p>
+
+                {# Dynamic color class per card #}
+                {% if stat.color == 'green' %}
+                    <span>✅ Good</span>
+                {% elif stat.color == 'blue' %}
+                    <span>📊 Active</span>
+                {% else %}
+                    <span>🔵 Info</span>
+                {% endif %}
+
+            </div>
+        {% endfor %}
+    </div>
+
+    {# ─── DYNAMIC TABLE ─── #}
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Metric</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stat in stats %}
+            <tr class="{{ 'highlight' if loop.first }}">  {# highlight first row #}
+                <td>{{ loop.index }}</td>
+                <td>{{ stat.label }}</td>
+                <td>{{ stat.value }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

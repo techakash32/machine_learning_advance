@@ -1,0 +1,33 @@
+{% extends 'base.html' %}   {# ← Inherit everything from base #}
+
+{# Override the header section #}
+{% block header %}
+    <h1>Welcome, {{ user }}! 👋</h1>
+{% endblock %}
+
+{% block content %}
+
+    {# ─── DYNAMIC BANNER (show/hide based on variable) ─── #}
+    {% if show_banner %}
+        <div class="banner">
+            🚀 New models are available!
+        </div>
+    {% endif %}
+
+    {# ─── DYNAMIC LIST from Python list variable ─── #}
+    <h2>Your Skills:</h2>
+    <ul>
+        {% for item in items %}
+            <li>{{ loop.index }}. {{ item }}</li>   {# loop.index = auto numbering #}
+        {% else %}
+            <li>No skills added yet.</li>   {# shown if list is empty #}
+        {% endfor %}
+    </ul>
+
+    {# ─── DYNAMIC TEXT with filter ─── #}
+    <p>Hello {{ user | upper }}!</p>          {# AKASH #}
+    <p>{{ user | lower }}</p>                 {# akash #}
+    <p>{{ user | replace('A', '@') }}</p>     {# @kash #}
+    <p>{{ items | length }} skills listed</p> {# 4 skills listed #}
+
+{% endblock %}

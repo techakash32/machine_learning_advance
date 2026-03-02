@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>  {# ← Dynamic title for every page #}
+</head>
+<body>
+
+    {# ─── DYNAMIC NAVBAR ─── #}
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('profile') }}">Profile</a>
+    </nav>
+
+    {# ─── DYNAMIC FLASH MESSAGES ─── #}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {# ─── DYNAMIC HEADER SECTION ─── #}
+    {% block header %}
+        <h1>{{ title }}</h1>   {# Default header, child pages can override #}
+    {% endblock %}
+
+    {# ─── MAIN CONTENT (every page fills this) ─── #}
+    {% block content %}
+    {% endblock %}
+
+    {# ─── DYNAMIC SIDEBAR (optional per page) ─── #}
+    {% block sidebar %}
+    {% endblock %}
+
+    {# ─── DYNAMIC FOOTER ─── #}
+    {% block footer %}
+        <footer>
+            <p>&copy; 2025 {{ title }}. All rights reserved.</p>
+        </footer>
+    {% endblock %}
+
+</body>
+</html>
